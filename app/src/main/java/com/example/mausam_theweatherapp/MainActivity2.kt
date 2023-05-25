@@ -1,7 +1,9 @@
 package com.example.mausam_theweatherapp
 
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,6 +16,8 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.DiskBasedCache
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
+import com.google.gson.JsonObject
+import org.json.JSONObject
 
 class MainActivity2 : AppCompatActivity() {
     lateinit var requestQueue: RequestQueue
@@ -23,7 +27,7 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView: RecyclerView = findViewById(R.id.hourly_temp_rv)
+//        val recyclerView: RecyclerView = findViewById(R.id.hourly_temp_rv)
 
         val cache = DiskBasedCache(cacheDir, 1024 * 1024) // 1MB cap
 
@@ -41,8 +45,17 @@ class MainActivity2 : AppCompatActivity() {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             { response ->
                 val forecastObj = response.getJSONObject("forecast")
-                val hour = forecastObj.getJSONArray("hour")
+                val forecastDay = forecastObj.getJSONArray("forecastday")
+                val forecastDayIndexZero = forecastDay.getJSONObject(0)
+                val hour = forecastDayIndexZero.getJSONArray("hour")
 
+                var everyHourForecast = mutableListOf<JSONObject>()
+                for (i in 0..23){
+                    everyHourForecast.add(hour.getJSONObject(i))
+                }
+                for(i in 0..23){
+                    Log.e("TAG", everyHourForecast[i].getString("temp_c"))
+                }
             },
             { error ->
             }
