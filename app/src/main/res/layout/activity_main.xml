@@ -67,17 +67,15 @@
 
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="100dp"
+      android:layout_height="150dp"
       android:orientation="horizontal"
     >
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      android:id="@+id/hourly_temp_rv"
         tools:listitem="@layout/hourly_temp_recycler_view"
+      android:id="@+id/hourly_temp_rv"
       />
 
 
