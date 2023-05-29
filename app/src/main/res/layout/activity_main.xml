@@ -77,8 +77,107 @@
         tools:listitem="@layout/hourly_temp_recycler_view"
       android:id="@+id/hourly_temp_rv"
       />
-
-
   </LinearLayout>
 
+  <LinearLayout
+      android:layout_marginTop="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:orientation="horizontal">
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Forecast"
+        android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
+        android:paddingLeft="10dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Max"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Min"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="100dp"
+        android:textSize="20sp"/>
+  </LinearLayout>
+  <LinearLayout
+      android:layout_marginTop="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:id="@+id/tomorrow_weather_LL"
+      android:orientation="horizontal">
+    <TextView
+
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+      android:text="2023-05-23"
+      android:layout_gravity="center_vertical"
+      android:layout_marginLeft="8dp"
+      android:textSize="20sp"
+      android:id="@+id/tomorrow_weather_date_tv"/>
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="35.5°"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:textSize="20sp"
+        android:id="@+id/tomorrow_max_temp_tv"/>
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="29.7°"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="100dp"
+        android:textSize="20sp"
+        android:id="@+id/tomorrow_min_temp_tv"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_marginTop="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:id="@+id/day_after_tomorrow_weather_LL"
+      android:orientation="horizontal">
+    <TextView
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="2023-05-23"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:textSize="20sp"
+        android:id="@+id/day_after_tomorrow_weather_date_tv"/>
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="35.5°"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:textSize="20sp"
+        android:id="@+id/day_after_tomorrow_max_temp_tv"/>
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="29.7°"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="100dp"
+        android:textSize="20sp"
+        android:id="@+id/day_after_tomorrow_min_temp_tv"/>
+  </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.mausam_theweatherapp
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,16 +13,25 @@ import com.android.volley.toolbox.DiskBasedCache
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
+import org.w3c.dom.Text
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var requestQueue: RequestQueue
     private lateinit var recyclerView: RecyclerView
-    private var defaultInput = "frankfurt"
+    private var defaultInput = "surat"
     private var hourTempList = mutableListOf<HoursItemViewModel>()
     private lateinit var currTempTV:TextView
     private lateinit var currConditionTV:TextView
     private lateinit var currLocationTV:TextView
     private lateinit var currFeelsLikeTV:TextView
+
+    private lateinit var tmrDateTV:TextView
+    private lateinit var tmrMaxTemp:TextView
+    private lateinit var tmrMinTemp:TextView
+
+    private lateinit var dayAfterTmrDateTV:TextView
+    private lateinit var dayAfterTmrMaxTemp:TextView
+    private lateinit var dayAfterTmrMinTemp:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,6 +41,13 @@ class MainActivity2 : AppCompatActivity() {
         currLocationTV = findViewById(R.id.current_location_tv)
         currFeelsLikeTV = findViewById(R.id.current_feels_like_tv)
         recyclerView = findViewById(R.id.hourly_temp_rv)
+
+        tmrDateTV = findViewById(R.id.tomorrow_weather_date_tv)
+        tmrMaxTemp = findViewById(R.id.tomorrow_max_temp_tv)
+        tmrMinTemp = findViewById(R.id.tomorrow_min_temp_tv)
+        dayAfterTmrDateTV = findViewById(R.id.day_after_tomorrow_weather_date_tv)
+        dayAfterTmrMaxTemp = findViewById(R.id.day_after_tomorrow_max_temp_tv)
+        dayAfterTmrMinTemp = findViewById(R.id.day_after_tomorrow_min_temp_tv)
         recyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true)
         val cache = DiskBasedCache(cacheDir, 1024 * 1024) // 1MB cap
 
@@ -43,7 +60,7 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
     private fun fetchData(input: String) {
-        val url = "https://api.weatherapi.com/v1/forecast.json?key=76580266a75e40b999f170314220605&q=${input}&days=1"
+        val url = "https://api.weatherapi.com/v1/forecast.json?key=76580266a75e40b999f170314220605&q=${input}&days=3"
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             { response ->
                 val current = response.getJSONObject("current")
@@ -72,8 +89,21 @@ class MainActivity2 : AppCompatActivity() {
 
                 currTempTV.text = current.getString("temp_c") + "°"
                 currLocationTV.text = location.getString("name")
-                currFeelsLikeTV.text = "Feels Like ${current.getString("feelslike_c")}°"
+                val currFeelsLikeString: String = "${(forecastDayIndexZero.getJSONObject("day").getString("maxtemp_c"))}° / ${(forecastDayIndexZero.getJSONObject("day").getString("mintemp_c"))}° Feels Like ${current.getString("feelslike_c")}°"
+                currFeelsLikeTV.text = currFeelsLikeString
                 currConditionTV.text = current.getJSONObject("condition").getString("text")
+
+                //tomorrow
+                val forecastDayIndexOne = forecastDay.getJSONObject(1)
+                tmrDateTV.text = forecastDayIndexOne.getString("date")
+                tmrMaxTemp.text = forecastDayIndexOne.getJSONObject("day").getString("maxtemp_c")
+                tmrMinTemp.text = forecastDayIndexOne.getJSONObject("day").getString("mintemp_c")
+
+                //day after tomorrow
+                val forecastDayIndexTwo = forecastDay.getJSONObject(2)
+                dayAfterTmrDateTV.text = forecastDayIndexTwo.getString("date")
+                dayAfterTmrMaxTemp.text = forecastDayIndexTwo.getJSONObject("day").getString("maxtemp_c")
+                dayAfterTmrMinTemp.text = forecastDayIndexTwo.getJSONObject("day").getString("mintemp_c")
             },
             { error ->
             }
