@@ -26,11 +26,11 @@ class HourlyAdapter(val mContext: Context, private val mList: List<HoursItemView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val HoursItemViewModel = mList[position]
-
         val imgUrl = "https:" + HoursItemViewModel.icon
         Glide.with(mContext).load(imgUrl).into(holder.iconIV)
         holder.tempTV.text = HoursItemViewModel.tempC.toString()
         holder.timeTV.text = HoursItemViewModel.time
+
     }
 
 
